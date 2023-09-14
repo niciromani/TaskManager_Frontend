@@ -1,0 +1,94 @@
+<h2 mat-dialog-title>Add Task</h2>
+<mat-dialog-content class="mat-typography">
+  <form class="task-form">
+    <table class="example-full-width">
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Titel</mat-label>
+            <input name="title" matInput [(ngModel)]="mytask.title">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Description</mat-label>
+            <input name="description" matInput [(ngModel)]="mytask.description">
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Start Date</mat-label>
+            <input name="beginDate" matInput [matDatepicker]="startPicker" [(ngModel)]="mytask.beginDate">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+            <mat-datepicker #startPicker></mat-datepicker>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>End Date</mat-label>
+            <input name="endDate" matInput [matDatepicker]="endPicker" [(ngModel)]="mytask.endDate">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+            <mat-datepicker #endPicker></mat-datepicker>
+          </mat-form-field>
+        </td>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-select name="priority" placeholder="Priority" [(ngModel)]="mytask.priority">
+              <mat-option  *ngFor="let priority of priorities" [value]="priority">
+                {{priority}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-chip-list">
+            <mat-chip-list #chipList aria-label="Tag selection">
+              <mat-chip
+                *ngFor="let tag of tags"
+                (removed)="remove(tag)">
+                {{tag.tagName}}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+              <input
+                placeholder="Tags"
+                #tagInput
+                [formControl]="tagCrtl"
+                [matAutocomplete]="auto"
+                [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" class="example-full-width">
+              <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+                {{tag.tagName}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <section>
+            <mat-checkbox name="finishedCheckbox" class="example-margin" [(ngModel)]="mytask.isFinished" color="primary">
+              Finished
+            </mat-checkbox>
+          </section>
+        </td>
+        <td>
+          <div class="button">
+            <button mat-flat-button color="primary" (click)="addTask()" >Add</button>
+            <button mat-flat-button color="primary" [mat-dialog-close]="true">Cancel</button>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </form>
+</mat-dialog-content>
+

@@ -1,0 +1,63 @@
+<mat-card class="mat-elevation-z5">
+  <mat-card-title>Menu</mat-card-title>
+  <mat-card-content>
+    <form>
+      <mat-form-field class="mat-form-field">
+        <mat-label>Select view</mat-label>
+        <mat-select [(value)]="selectedView">
+          <mat-option *ngFor="let view of views" [value]="view">{{view.label}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+
+    <app-search-task [myView]="selectedView.label" (searchedTasks)="handleSearchData($event)"></app-search-task>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <div *ngIf="selectedView.value == 1">
+    <mat-card-title>{{views[0].label}}</mat-card-title>
+    <mat-card-content>
+      <app-manage-tasks [searchTaskTable]="searchedData"></app-manage-tasks>
+    </mat-card-content>
+  </div>
+  <div *ngIf="selectedView.value == 2">
+    <mat-card-title>{{views[1].label}}</mat-card-title>
+    <mat-card-content>
+      <app-show-chronological ></app-show-chronological>
+    </mat-card-content>
+  </div>
+
+  <div *ngIf="selectedView.value == 3">
+    <mat-card-title>{{views[2].label}}</mat-card-title>
+    <mat-card-content>
+      <app-show-finished [searchTaskTable]="searchedData"></app-show-finished>
+    </mat-card-content>
+  </div>
+</mat-card>
+
+
+<!--<mat-card class="mat-elevation-z5">-->
+<!--  <div [ngSwitch]="selectedView.value">-->
+<!--    <div *ngSwitchCase="views[0].value">-->
+<!--      <mat-card-title>{{views[0].label}}</mat-card-title>-->
+<!--      <mat-card-content>-->
+<!--        <app-manage-tasks></app-manage-tasks>-->
+<!--      </mat-card-content>-->
+<!--    </div>-->
+<!--    <div *ngSwitchCase="views[1].value">-->
+<!--      <mat-card-title>{{views[1].label}}</mat-card-title>-->
+<!--      <mat-card-content>-->
+<!--        <app-show-chronological></app-show-chronological>-->
+<!--      </mat-card-content>-->
+<!--    </div>-->
+<!--    <div *ngSwitchCase="views[2].value">-->
+<!--      <mat-card-title>{{views[2].label}}</mat-card-title>-->
+<!--      <mat-card-content>-->
+<!--        <app-show-finished></app-show-finished>-->
+<!--      </mat-card-content>-->
+<!--    </div>-->
+
+<!--  </div>-->
+
+<!--</mat-card>-->

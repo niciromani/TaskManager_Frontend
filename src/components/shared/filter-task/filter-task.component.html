@@ -1,0 +1,94 @@
+<form class="example-form">
+  <mat-accordion class="mat-card">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Filter
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-form-field>
+        <mat-chip-list #chipListTag aria-label="Tag selection">
+          <mat-chip
+            *ngFor="let tag of tags"
+            (removed)="removeTag(tag)">
+            {{tag.tagName}}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input
+            placeholder="Tags"
+            #tagInput
+            [formControl]="tagCrtl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipListTag"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodesTag">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedTag($event)" class="example-full-width">
+          <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+            {{tag.tagName}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-chip-list #dateList aria-label="Date selection">
+          <mat-chip
+            *ngFor="let date of dates"
+            (removed)="removeDate(date)">
+            {{date}}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input
+            placeholder="Dates"
+            #dateInput
+            [formControl]="dateCtrl"
+            [matAutocomplete]="autoDate"
+            [matChipInputFor]="dateList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodesDate">
+        </mat-chip-list>
+        <mat-autocomplete #autoDate="matAutocomplete" (optionSelected)="selectedDate($event)" class="example-full-width">
+          <mat-option *ngFor="let date of filteredDates | async" [value]="date">
+            {{date}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-chip-list #priorityList aria-label="Priority selection">
+          <mat-chip
+            *ngFor="let priority of priorities"
+            (removed)="removePriority(priority)">
+            {{priority}}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input
+            placeholder="Priorities"
+            #dateInput
+            [formControl]="priorityCtrl"
+            [matAutocomplete]="autoPriority"
+            [matChipInputFor]="priorityList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodesPriority">
+        </mat-chip-list>
+        <mat-autocomplete #autoPriority="matAutocomplete" (optionSelected)="selectedPriorities($event)" class="example-full-width">
+          <mat-option *ngFor="let priority of filteredPriorities | async" [value]="priority">
+            {{priority}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-action-row>
+        <button mat-button color="primary" (click)="applyFilter()">Apply Filter</button>
+        <button mat-button color="primary" (click) = "cancelFilter()">Cancle Filter</button>
+      </mat-action-row>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+</form>
+
+
